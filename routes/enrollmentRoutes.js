@@ -55,4 +55,9 @@ router.delete(
     enrollmentController.deleteEnrollment
 )
 
+// router.get(
+//     "/students/:id/history",
+//     enrollmentController.getHistoryEnrollments
+// )
+
 export default router;

@@ -21,9 +21,12 @@ const createEnrollment = async (data) => {
         throw error
     }
 
-    const student = await Enrollment.findOne({ studentId })
+    const student = await Enrollment.findOne({
+        studentId,
+        subjectExist
+    })
 
-    if (student) {
+    if (!student) {
         const error = new Error("Esse id de estudante já foi utilizado")
         error.statusCode = 400
         throw error
@@ -147,6 +150,8 @@ const deleteEnrollment = async (id) => {
     return enrollment
 }
 
+// const getHistoryEnrollments =
+
 export default {
     createEnrollment,
     getAllEnrollments,
@@ -157,5 +162,6 @@ export default {
     countEnrollments,
     updateEnrollmentByGrade,
     updateStatus,
-    deleteEnrollment
+    deleteEnrollment,
+    // getHistoryEnrollments
 }

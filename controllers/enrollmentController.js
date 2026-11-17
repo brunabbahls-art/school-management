@@ -132,6 +132,12 @@ const deleteEnrollment = async (req, res, next) => {
     }
 }
 
+// const getHistoryEnrollments = async (req, res, next) => {
+//     try {
+//         const enrollment = await enrollmentService.getHistoryEnrollments
+//     }
+// }
+
 export default {
     createEnrollment,
     getAllEnrollments,

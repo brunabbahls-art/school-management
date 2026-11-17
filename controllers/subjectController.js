@@ -4,7 +4,6 @@ import subjectService from "../services/subjectService.js"
 const createSubject = async (req, res, next) => {
     try {
 
-        console.log("chegou")
         const subject = await subjectService.createSubject(req.body)
 
         res.status(201).json({
