@@ -46,7 +46,7 @@ router.patch(
 
     router.patch(
         "/:id/status", 
-        enrollmentController.updateStatus
+        enrollmentController.updateEnrollmentStatus
     )
 
     router.delete(

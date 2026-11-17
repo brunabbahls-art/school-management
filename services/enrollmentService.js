@@ -107,27 +107,12 @@ const countEnrollments = async () => {
     return Enrollment.countDocuments()
 }
 
-const updateGrade = async (id, data) => {
-    const  notaFinal  = data
-
-    if (notaFinal < 0 || notaFinal > 10) {
-        const error = new Error("A nota final deve estar entre 0 e 10!")
-        error.statusCode = 400
-        throw error
-    }
- }
-
- const updateStatus = async (id, status) => {
-    if (status !== "Ativa" && status !== "Concluida" && status !== "Cancelada") {
-        const error = new Error("Status inválido!")
-        error.statusCode = 400
-        throw error
-    }
-
-    const enrollment = await Enrollment.findByIdAndUpdate(
-        id,
-        status,
-        { new: true })
+const updateEnrollmentByGrade = async (id, data) => {
+    const { notaFinal } = data
+    const enrollment = await Enrollment.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true,
+    })
 
     if (!enrollment) {
         const error = new Error("Inscrição não encontrado")
@@ -137,21 +122,31 @@ const updateGrade = async (id, data) => {
 
     return enrollment
 }
+
+const updateEnrollmentStatus = async (id, data) => {
+    const enrollment = await Enrollment.findByIdAndUpdate(id, data)
+
+    if (!enrollment) {
+        const error = new Error("Estudante não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollment
+}
+
 
 const deleteEnrollment = async (id) => {
-    const enrollment = await Enrollment.findById(id)
+    const enrollment = await Enrollment.findByIdAndDelete(id)
 
     if (!enrollment) {
-        const error = new Error("Inscrição não encontrado")
+        const error = new Error("Não encontrado")
         error.statusCode = 404
         throw error
     }
 
-    await enrollment.deleteOne()
-
     return enrollment
 }
-
 
 
 export default {
@@ -162,7 +157,7 @@ export default {
     getEnrollmentBySubjectId,
     getEnrollmentByStatus,
     countEnrollments,
-    updateGrade,
-    updateStatus,
+    updateEnrollmentByGrade,
+    updateEnrollmentStatus,
     deleteEnrollment
 }

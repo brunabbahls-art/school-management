@@ -92,35 +92,42 @@ const countEnrollments = async (req, res, next) => {
     }
 }
 
-const updateGrade = async (req, res, next) => {
+const updateEnrollmentByGrade = async (req, res, next) => {
     try {
-        const enrollment = await enrollmentService.updateGrade( req.body.id)
+        const enrollment = await enrollmentService.updateEnrollmentByGrade(req.params.id,
+            req.body)
 
-        return res.status(200).json(enrollment)
+        res.status(200).json({
+            message: "Nota da Inscrição atualizada com sucesso",
+            data: enrollment,
+        })
     } catch (error) {
         next(error)
     }
 }
 
-const updateStatus = async (req, res, next) => {
+
+const updateEnrollmentStatus = async (req, res, next) => {
     try {
-        const enrollment = await enrollmentService.updateStatus( req.body.id)
-        return res.status(200).json ({
+        const enrollment = await enrollmentService.updateEnrollmentStatus(req.params.id,
+            req.body)
+        
+        res.status(200).json({
+            message: " Atualizados com sucesso",
             data: enrollment
-     } )
+        })
     } catch (error) {
         next(error)
     }
 }
-
 
 const deleteEnrollment = async (req, res, next) => {
     try {
-        const enrollment = await enrollmentService.deleteSubject(req.params.id)
-
+        const enrollments = await enrollmentService.deleteEnrollment(req.params.id)
+        
         res.status(200).json({
-            message: "Assunto deletado com sucesso",
-            data: enrollment,
+            message: " Deletados com sucesso",
+            data: enrollments
         })
     } catch (error) {
         next(error)
@@ -136,7 +143,7 @@ export default {
     getEnrollmentBySubjectId,
     getEnrollmentByStatus,
     countEnrollments,
-    updateGrade,
-    updateStatus,
+    updateEnrollmentByGrade,
+    updateEnrollmentStatus,
     deleteEnrollment
 }
