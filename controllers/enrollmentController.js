@@ -132,9 +132,42 @@ const deleteEnrollment = async (req, res, next) => {
     }
 }
 
-// const getHistoryEnrollments = async (req, res, next) => {
+const getHistoryStudents = async (req, res, next) => {
+    try {
+        const enrollment = await enrollmentService.getHistoryStudents(req.params.studentId)
+
+        res.status(200).json({
+            message: "Inscrição mostrada com sucesso",
+            data: enrollment,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getStudentsBySubject = async (req, res, next) => {
+    try {
+        const enrollment = await enrollmentService.getStudentsBySubject(req.params.subjectId)
+
+        res.status(200).json({
+            message: "Inscrição mostrada com sucesso",
+            data: enrollment,
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+// const getNotesByAverage = async (req, res, next) => {
 //     try {
-//         const enrollment = await enrollmentService.getHistoryEnrollments
+//         const enrollment = await enrollmentService.getNotesByAverage()
+
+//         res.status(200).json({
+//             message: "Inscrição mostrada com sucesso",
+//             data: enrollment,
+//         })
+//     } catch (error) {
+//         next(error)
 //     }
 // }
 
@@ -148,5 +181,8 @@ export default {
     countEnrollments,
     updateEnrollmentByGrade,
     updateStatus,
-    deleteEnrollment
+    deleteEnrollment,
+    getHistoryStudents,
+    getStudentsBySubject,
+    // getNotesByAverage
 }

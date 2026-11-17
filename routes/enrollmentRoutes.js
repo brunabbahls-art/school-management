@@ -55,9 +55,20 @@ router.delete(
     enrollmentController.deleteEnrollment
 )
 
+router.get(
+    "/students/:studentId/history",
+    enrollmentController.getHistoryStudents
+)
+
+router.get(
+    "/subjects/:studentId/students/count",
+    enrollmentController.getStudentsBySubject
+)
+
+
 // router.get(
-//     "/students/:id/history",
-//     enrollmentController.getHistoryEnrollments
+//     "/subjects/:subjectId/average",
+//     enrollmentController.getNotesByAverage
 // )
 
 export default router;

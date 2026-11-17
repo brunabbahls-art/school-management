@@ -23,10 +23,10 @@ const createEnrollment = async (data) => {
 
     const student = await Enrollment.findOne({
         studentId,
-        subjectExist
+        subjectId
     })
 
-    if (!student) {
+    if (student) {
         const error = new Error("Esse id de estudante já foi utilizado")
         error.statusCode = 400
         throw error
@@ -150,7 +150,33 @@ const deleteEnrollment = async (id) => {
     return enrollment
 }
 
-// const getHistoryEnrollments =
+const getHistoryStudents = async (studentId) => {
+    const enrollment = await Enrollment.findOne({ studentId })
+
+    if (!enrollment) {
+        const error = new Error("Inscrição não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollment
+}
+
+const getStudentsBySubject = async (subjectId) => {
+    return Enrollment.countDocuments()
+}
+
+// const getNotesByAverage = async () => {
+//     const enrollment = await Enrollment.find())
+
+//     if (!enrollment) {
+//         const error = new Error("Inscrição não encontrado")
+//         error.statusCode = 404
+//         throw error
+//     }
+
+//     return enrollment
+// }
 
 export default {
     createEnrollment,
@@ -163,5 +189,7 @@ export default {
     updateEnrollmentByGrade,
     updateStatus,
     deleteEnrollment,
-    // getHistoryEnrollments
+    getHistoryStudents,
+    getStudentsBySubject,
+    // getNotesByAverage
 }
