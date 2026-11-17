@@ -1,5 +1,6 @@
 import express from "express"
 import enrollmentController from "../controllers/enrollmentController.js"
+import e from "express"
 
 
 const router = express.Router()
@@ -37,6 +38,21 @@ router.get(
 router.get(
     "//count",
     enrollmentController.countEnrollments
+)
+
+router.patch(
+    "/:id/grade",
+    enrollmentController.updateEnrollmentByGrade
+)
+
+router.patch(
+    "/:id/status",
+    enrollmentController.updateStatus
+)
+
+router.delete(
+    "/:id/delete",
+    enrollmentController.deleteEnrollment
 )
 
 export default router;

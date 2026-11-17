@@ -107,6 +107,46 @@ const countEnrollments = async () => {
     return Enrollment.countDocuments()
 }
 
+const updateEnrollmentByGrade = async (id, data) => {
+    const { notaFinal } = data
+    const enrollment = await Enrollment.findByIdAndUpdate(id, data, {
+        new: true,
+        runValidators: true,
+    })
+
+    if (!enrollment) {
+        const error = new Error("Inscrição não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollment
+}
+
+const updateStatus = async (id, data) => {
+    const enrollment = await Enrollment.findByIdAndUpdate(id, data)
+
+    if (!enrollment) {
+        const error = new Error("Inscrição não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollment
+}
+
+const deleteEnrollment = async (id) => {
+    const enrollment = await Enrollment.findByIdAndDelete(id)
+
+    if (!enrollment) {
+        const error = new Error("Inscrição não encontrado")
+        error.statusCode = 404
+        throw error
+    }
+
+    return enrollment
+}
+
 export default {
     createEnrollment,
     getAllEnrollments,
@@ -114,5 +154,8 @@ export default {
     getEnrollmentByStudentId,
     getEnrollmentBySubjectId,
     getEnrollmentByStatus,
-    countEnrollments
+    countEnrollments,
+    updateEnrollmentByGrade,
+    updateStatus,
+    deleteEnrollment
 }
