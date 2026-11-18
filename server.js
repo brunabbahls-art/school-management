@@ -11,10 +11,12 @@ import subjectRoutes from "./routes/subjectRoutes.js"
 
 import teacherRoutes from "./routes/teacherRoutes.js"
 
+import authRoutes from "./routes/authRoutes.js"
+
 dotenv.config()
 
 const app = express();
-const PORT = 9090
+const PORT = 3000
 
 app.use(express.json());
 
@@ -25,6 +27,8 @@ app.use("/students", studentRoutes)
 app.use("/subjects", subjectRoutes)
 
 app.use("/teachers", teacherRoutes)
+
+app.use("/auth", authRoutes)
 
 const startServer = async () => {
     try {
