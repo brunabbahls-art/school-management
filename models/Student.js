@@ -2,18 +2,6 @@ import mongoose from "mongoose";
 
 const StudentSchema = new mongoose.Schema(
     {
-        nome: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true
-        },
         idade: {
             type: Number,
             required: true,

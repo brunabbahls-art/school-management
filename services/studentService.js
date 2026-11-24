@@ -1,48 +1,56 @@
 import Student from "../models/Student.js";
 
 const createStudent = async (data) => {
-    const { nome, email, idade, matricula } = data
+    const { nome, email, idade, telefone, matricula } = data
 
-    if (!nome || !email) {
+    if (!nome || !email || !idade || !telefone ) {
         const error = new Error("O nome e o email são obrigatórios")
         error.statuscode = 400
         throw error
     }
 
-    const studentExists = await Student.findOne({ email })
+    const userExists = await User.findOne({ email })
 
-    if (studentExists) {
+    if (userExists) {
         const error = new Error("O email já foi utilizado")
         error.statusCode = 400
         throw error
     }
 
-    const student = await Student.create({
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const user = await User.create({
         nome,
         email,
-        idade,
-        matricula
+        password: hashedPassword,
+        telefone,
+        role: "student",
+        ativo: true
     })
+    try {
+        const student = await Student.create({
+            userId: user._id,
+            idade,
+            matricula,
+            ativo: true
+        })
+        return Student.findById(teacher._id)
+            .populate("userId", "nome email")
 
-    return {
-        _id: student._id,
-        nome: student.nome,
-        email: student.email,
-        idade: student.idade,
-        matricula: student.matricula,
-        createdAt: student.createdAt,
-        updatedAt: student.updatedAt
+    } catch (error) {
+        await User.findByIdAndDelete(user._id)
+        throw error
     }
-
-    return student;
 }
 
 const getAllStudents = async () => {
     return Student.find()
+        .populate("userId", "nome email")
 }
-    
+
 const getStudentById = async (id) => {
-    const student = await Student.findById(id);
+    const student = await Student.findById(id)
+        .populate("userId", "nome email")
 
     if (!student) {
         const error = new Error("Estudante não encontrado")
@@ -57,7 +65,7 @@ const searchStudentsActives = async (ativo) => {
     const student = await Student.find({
         ativo: true,
     })
-
+        .populate("userId", "nome email")
     if (!student) {
         const error = new Error("Estudante não encontrado")
         error.statusCode = 404
@@ -71,7 +79,7 @@ const searchStudentsNames = async (nome) => {
     const student = await Student.find({
         nome
     })
-
+        .populate("userId", "nome email")
     if (!student) {
         const error = new Error("Estudante não encontrado")
         error.statusCode = 404

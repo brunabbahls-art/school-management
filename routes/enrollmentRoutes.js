@@ -1,4 +1,6 @@
 import express from "express"
+import authMiddleware from "../middlewares/authMiddlewares.js"
+import adminMiddleware from "../middlewares/adminMiddleware.js"
 import enrollmentController from "../controllers/enrollmentController.js"
 import e from "express"
 
@@ -7,62 +9,62 @@ const router = express.Router()
 
 router.post(
     "/",
-    enrollmentController.createEnrollment
+    authMiddleware, adminMiddleware, enrollmentController.createEnrollment
 )
 
 router.get(
     "/",
-    enrollmentController.getAllEnrollments
+    authMiddleware, adminMiddleware, enrollmentController.getAllEnrollments
 )
 
 router.get(
     "/:id",
-    enrollmentController.getEnrollmentById
+    authMiddleware, adminMiddleware, enrollmentController.getEnrollmentById
 )
 
 router.get(
     "/student/:studentId",
-    enrollmentController.getEnrollmentByStudentId
+    authMiddleware, adminMiddleware, enrollmentController.getEnrollmentByStudentId
 )
 
 router.get(
     "/subject/:subjectId",
-    enrollmentController.getEnrollmentBySubjectId
+    authMiddleware, adminMiddleware, enrollmentController.getEnrollmentBySubjectId
 )
 
 router.get(
     "/status/:status",
-    enrollmentController.getEnrollmentByStatus
+    authMiddleware, adminMiddleware, enrollmentController.getEnrollmentByStatus
 )
 
 router.get(
     "//count",
-    enrollmentController.countEnrollments
+    authMiddleware, adminMiddleware, enrollmentController.countEnrollments
 )
 
 router.patch(
     "/:id/grade",
-    enrollmentController.updateEnrollmentByGrade
+    authMiddleware, adminMiddleware, enrollmentController.updateEnrollmentByGrade
 )
 
 router.patch(
     "/:id/status",
-    enrollmentController.updateStatus
+    authMiddleware, adminMiddleware, enrollmentController.updateStatus
 )
 
 router.delete(
     "/:id/delete",
-    enrollmentController.deleteEnrollment
+    authMiddleware, adminMiddleware, enrollmentController.deleteEnrollment
 )
 
 router.get(
     "/students/:studentId/history",
-    enrollmentController.getHistoryStudents
+    authMiddleware, adminMiddleware, enrollmentController.getHistoryStudents
 )
 
 router.get(
     "/subjects/:studentId/students/count",
-    enrollmentController.getStudentsBySubject
+    authMiddleware, adminMiddleware, enrollmentController.getStudentsBySubject
 )
 
 
@@ -71,4 +73,4 @@ router.get(
 //     enrollmentController.getNotesByAverage
 // )
 
-export default router;
+export default router; 
