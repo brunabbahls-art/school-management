@@ -67,10 +67,4 @@ router.get(
     authMiddleware, adminMiddleware, enrollmentController.getStudentsBySubject
 )
 
-
-// router.get(
-//     "/subjects/:subjectId/average",
-//     enrollmentController.getNotesByAverage
-// )
-
 export default router; 

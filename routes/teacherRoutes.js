@@ -31,7 +31,7 @@ router.get(
 )
 
 router.get(
-    "/count/teachers/",
+    "/count/teachers/c",
     authMiddleware, adminMiddleware, teacherController.countTeachers
 )
 
