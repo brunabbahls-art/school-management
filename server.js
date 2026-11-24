@@ -51,8 +51,9 @@ const startServer = async () => {
             console.log(`O servidor está rodando na porta: ${PORT}`);
         });
     } catch (error) {
-        console.error("Erro ao iniciar o servidor:", error);
-        process.exit(1); // Encerra o processo com erro para o Render registrar nos logs
+        // Exibe o objeto de erro completo para depuração no Render
+        console.error("Erro crítico ao iniciar o servidor:", error);
+        process.exit(1);
     }
 };
 
